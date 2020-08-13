@@ -30,7 +30,7 @@ public class TagsController {
         this.mapper = mapper;
     }
 
-    @GetMapping(value = "/", produces = APPLICATION_JSON_VALUE)
+    @GetMapping(value = {"/", ""}, produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Tag>> list() {
         return ResponseEntity.ok().body(service.list());
     }
@@ -40,7 +40,7 @@ public class TagsController {
         return ResponseEntity.ok().body(service.get(id));
     }
 
-    @PostMapping("/")
+    @PostMapping({"/", ""})
     public ResponseEntity<Tag> save(@RequestBody TagDto tagDto) {
         return ResponseEntity.ok().body(service.save(mapper.fromDto(tagDto)));
     }

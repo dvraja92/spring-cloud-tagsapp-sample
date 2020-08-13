@@ -5,6 +5,8 @@ import com.example.tagsapp.tagservice.domain.repo.TagRepository;
 import com.example.tagsapp.tagservice.exception.EntityNotFoundException;
 import com.example.tagsapp.tagservice.service.TagService;
 import com.google.common.collect.Lists;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +15,8 @@ import java.util.List;
 
 @Service
 public class TagServiceImpl extends AbstractService<Tag, TagRepository> implements TagService {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(TagServiceImpl.class);
 
     @Autowired
     public TagServiceImpl(TagRepository repository) {
@@ -31,7 +35,11 @@ public class TagServiceImpl extends AbstractService<Tag, TagRepository> implemen
 
     @Override
     public void delete(Long id) {
-        repository.deleteById(id);
+        try {
+            repository.deleteById(id);
+        } catch (Exception e) {
+            LOGGER.warn("Couldn't delete", e);
+        }
     }
 
     @Override
